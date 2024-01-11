@@ -16,20 +16,6 @@ const font = Nunito({
 });
 
 export default async function RootLayout({ children }) {
-  // if (process.env.NODE_ENV === "development") {
-  //   if (typeof window === "undefined") {
-  //     (async () => {
-  //       const { server } = await import("@/mocks/server");
-  //       server.listen();
-  //     })();
-  //   } else {
-  //     (async () => {
-  //       const { worker } = await import("@/mocks/browser");
-  //       worker.start();
-  //     })();
-  //   }
-  // }
-
   return (
     <html lang="en">
       <body className={font.className}>
