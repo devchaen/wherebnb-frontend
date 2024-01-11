@@ -3,11 +3,13 @@
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../ui/Avatar";
 import { useCallback, useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 import MenuItem from "./MenuItem";
-import useRegisterModal from "@/app/hooks/useRegisterModal";
-import useLoginModal from "@/app/hooks/useLoginModal";
+import useRegisterModal from "@/hooks/useRegisterModal";
+import useLoginModal from "@/hooks/useLoginModal";
 
 const UserMenu = () => {
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
@@ -56,7 +58,7 @@ const UserMenu = () => {
         >
           <AiOutlineMenu size={18} />
           <div className="hidden md:block">
-            <Avatar />
+            <Avatar src={session?.user?.image} />
           </div>
         </div>
       </div>
@@ -77,10 +79,21 @@ const UserMenu = () => {
         "
         >
           <div className="flex flex-col cursor-pointer">
-            <>
-              <MenuItem onClick={loginModal.onOpen} label="Login" />
-              <MenuItem onClick={registerModal.onOpen} label="Sign Up" />
-            </>
+            {session?.user ? (
+              <>
+                <MenuItem onClick={() => {}} label="메시지" />
+                <MenuItem onClick={() => {}} label="여행" />
+                <MenuItem onClick={() => {}} label="위시리스트" />
+                <MenuItem onClick={() => {}} label="숙소 관리" />
+                <hr />
+                <MenuItem onClick={() => signOut()} label="로그아웃" />
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={loginModal.onOpen} label="로그인" />
+                <MenuItem onClick={registerModal.onOpen} label="회원가입" />
+              </>
+            )}
           </div>
         </div>
       )}

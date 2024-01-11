@@ -1,12 +1,16 @@
 "use client";
 
-import Container from "@/app/components/ui/Container";
+import Container from "../ui/Container";
 import SearchBar from "./searchbar/SearchBar";
 import SearchBarContainer from "./searchbar/SearchBarContainer";
 import Logo from "./Logo";
 import UserMenu from "./UserMenu";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session } = useSession();
+  console.log(session);
+
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
       <div className="py-4">

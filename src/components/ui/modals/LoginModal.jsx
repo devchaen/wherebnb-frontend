@@ -9,6 +9,8 @@ import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import Button from "../Button";
+import { signIn } from "next-auth/react";
+import { toast } from "react-hot-toast";
 
 const LoginModal = () => {
   const router = useRouter();
@@ -25,6 +27,27 @@ const LoginModal = () => {
       password: "",
     },
   });
+
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+
+    signIn("Wherebnb", {
+      redirect: false,
+      ...data,
+    }).then((callback) => {
+      setIsLoading(false);
+
+      if (callback?.ok) {
+        toast.success("로그인되었습니다.");
+        router.refresh();
+        loginModal.onClose();
+      }
+
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    });
+  };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -57,13 +80,13 @@ const LoginModal = () => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
     </div>
   );
@@ -77,6 +100,7 @@ const LoginModal = () => {
       onClose={loginModal.onClose}
       body={bodyContent}
       footer={footerContent}
+      onSubmit={handleSubmit(onSubmit)}
     />
   );
 };
