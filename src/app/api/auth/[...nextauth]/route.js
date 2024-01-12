@@ -52,13 +52,29 @@ export const authOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    // async jwt({ token, user }) {
-    //   return { ...token, ...user };
-    // },
-    // async session({ session, token, user }) {
-    //   session.user = token;
-    //   return session;
-    // },
+    async signIn({ account, profile }) {
+      if (account.provider === "google") {
+        // 여기에서 서버로 토큰 전송!!!
+        console.log("account!!!", account);
+        console.log("profile!!!", profile);
+        return true;
+      }
+
+      if (account.provider === "github") {
+        console.log("account!!!", account);
+        console.log("profile!!!", profile);
+        return true;
+      }
+    },
+    async jwt({ token, user }) {
+      console.log("token!", token);
+      console.log("user!", user);
+      return { ...token, ...user };
+    },
+    async session({ session, token, user }) {
+      session.user = token;
+      return session;
+    },
   },
 };
 
