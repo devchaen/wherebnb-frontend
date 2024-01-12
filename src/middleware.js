@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request) {
-  const session = await fetch(`http://localhost:300/api/auth/session`, {
+  const session = await fetch(`http://localhost:3000/api/auth/session`, {
     headers: headers(),
     // cache: "no-store"
   }).then(async (res) => await res.json());

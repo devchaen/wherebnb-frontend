@@ -6,8 +6,7 @@ import { useCallback, useState } from "react";
 import MenuItem from "./MenuItem";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 const UserMenu = () => {
   const { data: session, status } = useSession();
@@ -25,20 +24,31 @@ const UserMenu = () => {
   } else if (session?.user) {
     menuContent = (
       <>
-        <MenuItem onClick={() => {}} label="My trips" />
-        <MenuItem onClick={() => {}} label="My favorites" />
-        <MenuItem onClick={() => {}} label="My reservations" />
-        <MenuItem onClick={() => {}} label="My properties" />
-        <MenuItem onClick={() => {}} label="Airbnb my home" />
+        <MenuItem onClick={() => {}} label="메시지" />
+        <MenuItem onClick={() => {}} label="여행" />
+        <MenuItem onClick={() => {}} label="위시리스트" />
+        <MenuItem onClick={() => {}} label="숙소 관리" />
         <hr />
-        <MenuItem onClick={() => signOut()} label="Logout" />
+        <MenuItem onClick={() => signOut()} label="로그아웃" />
       </>
     );
   } else {
     menuContent = (
       <>
-        <MenuItem onClick={loginModal.onOpen} label="로그인" />
-        <MenuItem onClick={registerModal.onOpen} label="회원 가입" />
+        <MenuItem
+          onClick={() => {
+            loginModal.onOpen();
+            toggleOpen();
+          }}
+          label="로그인"
+        />
+        <MenuItem
+          onClick={() => {
+            registerModal.onOpen();
+            toggleOpen();
+          }}
+          label="회원 가입"
+        />
       </>
     );
   }
@@ -82,7 +92,7 @@ const UserMenu = () => {
         >
           <AiOutlineMenu size={18} />
           <div className="hidden md:block">
-            <Avatar />
+            <Avatar src={session?.user?.image} />
           </div>
         </div>
       </div>

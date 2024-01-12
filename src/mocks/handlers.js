@@ -1,4 +1,4 @@
-import { http, HttpResponse, StrictResponse } from "msw";
+import { http, HttpResponse } from "msw";
 
 export const handlers = [
   http.post("/api/login", () => {
@@ -8,13 +8,13 @@ export const handlers = [
         userId: 1,
         nickname: "John",
         email: "hello1358@mail.com",
-        image: "/t44EUxc.jpg",
+        image: "/images/mockUserImage.png",
       },
       {
         headers: {
           "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path=/",
         },
-      },
+      }
     );
   }),
   http.post("/api/logout", () => {
@@ -27,13 +27,13 @@ export const handlers = [
   }),
   http.post("/api/users", async ({ request }) => {
     console.log("회원가입");
-    return HttpResponse.text(JSON.stringify("user_exists"), {
-      status: 403,
-    });
-    // return HttpResponse.text(JSON.stringify("ok"), {
-    //   headers: {
-    //     "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path=/;Max-Age=0",
-    //   },
+    // return HttpResponse.text(JSON.stringify("user_exists"), {
+    //   status: 403,
     // });
+    return HttpResponse.text(JSON.stringify("ok"), {
+      headers: {
+        "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path=/;Max-Age=0",
+      },
+    });
   }),
 ];

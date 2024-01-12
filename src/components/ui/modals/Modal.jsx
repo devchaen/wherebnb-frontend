@@ -7,7 +7,7 @@ import Button from "../Button";
 const Modal = ({
   isOpen,
   onClose,
-  // onSubmit,
+  onSubmit,
   title,
   body,
   footer,
@@ -31,12 +31,12 @@ const Modal = ({
     }, 300);
   }, [disabled, onClose]);
 
-  // const handleSubmit = useCallback(() => {
-  //   if (disabled) {
-  //     return;
-  //   }
-  //   onSubmit();
-  // }, [disabled, onSubmit]);
+  const handleSubmit = useCallback(() => {
+    if (disabled) {
+      return;
+    }
+    onSubmit();
+  }, [disabled, onSubmit]);
 
   const handleSecondaryAction = useCallback(() => {
     if (disabled || !secondaryAction) {
@@ -91,7 +91,7 @@ const Modal = ({
                   <Button
                     disabled={disabled}
                     label={actionLabel}
-                    // onClick={handleSubmit}
+                    onClick={handleSubmit}
                   />
                 </div>
                 {footer}

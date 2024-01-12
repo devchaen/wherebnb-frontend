@@ -1,16 +1,18 @@
 "use client";
-import axios from "axios";
+
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import Button from "../Button";
 import * as actions from "@/actions";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 function showMessage(messasge) {
   if (messasge === "no_id") {
@@ -29,6 +31,7 @@ function showMessage(messasge) {
 }
 
 const RegisterModal = () => {
+  const router = useRouter();
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState(null);
@@ -52,8 +55,9 @@ const RegisterModal = () => {
     console.log("response!", response);
 
     if (response.status === 200) {
-      registerModal.onClose();
       toast.success("성공적으로 회원가입이 되었습니다.");
+      router.refresh();
+      registerModal.onClose();
     } else {
       setMessage(showMessage(response.data));
     }
@@ -103,13 +107,13 @@ const RegisterModal = () => {
         outline
         label="구글로 로그인하기"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="깃허브로 로그인하기"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className=" justify-center flex flex-row items-center gap-2">
@@ -126,18 +130,16 @@ const RegisterModal = () => {
   );
 
   return (
-    <form action={action}>
-      <Modal
-        disabled={isLoading}
-        isOpen={registerModal.isOpen}
-        title="회원 가입"
-        actionLabel="계속"
-        onClose={registerModal.onClose}
-        // onSubmit={handleSubmit(onSubmit)}
-        body={bodyContent}
-        footer={footerContent}
-      />
-    </form>
+    <Modal
+      disabled={isLoading}
+      isOpen={registerModal.isOpen}
+      title="회원 가입"
+      actionLabel="계속"
+      onClose={registerModal.onClose}
+      onSubmit={handleSubmit(action)}
+      body={bodyContent}
+      footer={footerContent}
+    />
   );
 };
 
