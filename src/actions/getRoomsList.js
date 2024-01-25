@@ -33,14 +33,14 @@ export const getRoomsList = async (searchParams, pageParam) => {
       !property_type &&
       !amenities
     ) {
-      list = await api.get("/room/search", {
+      list = await api.get("/rooms/search", {
         params: {
           ...searchParams,
           page: pageParam,
         },
       });
     } else {
-      list = await api.get("/room/filtered", {
+      list = await api.get("/rooms/filtered", {
         params: {
           ...searchParams,
           page: pageParam,

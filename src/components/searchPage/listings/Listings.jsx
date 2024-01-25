@@ -49,16 +49,16 @@ const Listings = ({ currentUser, queryKey }) => {
       {isLoading && <ListingCardSkeleton number={20} />}
       {isError && <ErrorState showReset={true} />}
       {status === "success" &&
-        list.pages?.map((page) =>
-          page.content.map((room) => (
-            <ListingCard
-              key={room.propertyId}
-              propertyId={room.propertyId}
-              room={room}
-              currentUser={currentUser}
-            />
-          )),
-        )}
+        // list.pages?.map((page) =>
+        // page.content.map((room) =>
+        list?.map((room) => (
+          <ListingCard
+            key={room.propertyId}
+            propertyId={room.propertyId}
+            room={room}
+            currentUser={currentUser}
+          />
+        ))}
 
       <div
         className={`w-[100%] h-[44px] flex flex-col items-center pb-3 mt-3`}

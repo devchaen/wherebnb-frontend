@@ -82,23 +82,22 @@ const SearchMap = () => {
         center={mapCenter}
         mapContainerStyle={containerStyle}
       >
-        {list?.pages?.map((page) =>
-          page.content.map((room) => (
-            <OverlayViewF
-              position={{
-                lat: room.address.latitude,
-                lng: room.address.longtitude,
-              }}
-              mapPaneName="overlayMouseTarget"
-            >
-              <MarkerIcon
-                onClick={toggleSelectedMarker}
-                room={room}
-                selected={selectedMarker === room.propertyId}
-              />
-            </OverlayViewF>
-          ))
-        )}
+        {/* {list?.pages?.map((page) => */}
+        {list.map((room) => (
+          <OverlayViewF
+            position={{
+              lat: room.address.latitude,
+              lng: room.address.longtitude,
+            }}
+            mapPaneName="overlayMouseTarget"
+          >
+            <MarkerIcon
+              onClick={toggleSelectedMarker}
+              room={room}
+              selected={selectedMarker === room.propertyId}
+            />
+          </OverlayViewF>
+        ))}
       </GoogleMap>
     </div>
   );
