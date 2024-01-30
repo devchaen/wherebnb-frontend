@@ -22,7 +22,6 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={font.className}>
-        <MswProvider />
         <AuthSession>
           <ToastProvider />
           <RegisterModal />

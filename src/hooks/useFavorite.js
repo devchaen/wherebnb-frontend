@@ -13,6 +13,8 @@ const useFavorite = ({ listingId, currentUser }) => {
 
     if (!currentUser) return false;
 
+    if (!wishList) return false;
+
     return wishList.includes(Number(listingId));
   }, [currentUser, listingId]);
 
@@ -45,7 +47,7 @@ const useFavorite = ({ listingId, currentUser }) => {
         }
       }
     },
-    [currentUser, hasFavorited, listingId, loginModal, router],
+    [currentUser, hasFavorited, listingId, loginModal, router]
   );
 
   return {

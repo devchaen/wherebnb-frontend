@@ -26,14 +26,14 @@ const ListingCard = ({ room, propertyId, currentUser }) => {
           <div className="absolute top-4 right-4 z-[8]">
             <HeartButton listingId={propertyId} currentUser={currentUser} />
           </div>
-          <ImageSwiper images={room.photos} />
+          {/* <ImageSwiper images={room.photos} /> */}
         </div>
         <div className="flex flex-row justify-between text-md">
           <div className="font-semibold truncate">
             {room.address.country} {room.address.city}
           </div>
           <div className="font-light w-[93px] whitespace-nowrap text-right">
-            ★ {room.totalScore} ({room.reviews})
+            ★ {room.totalScore.toFixed(2)} ({room.reviews})
           </div>
         </div>
       </div>
